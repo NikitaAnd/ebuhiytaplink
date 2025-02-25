@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <title>NikitaAnd | Taplink</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #FF2D55;
+      --gradient-1: #FF2D55;
+      --gradient-2: #FF0022;
+      --bg-dark: #000000;
+      --bg-card: #0A0A0A;
+      --text-primary: #ffffff;
+      --text-secondary: #888888;
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px;
+      background: radial-gradient(circle at top left, 
+        rgba(255, 45, 85, 0.08), 
+        transparent 40%),
+        radial-gradient(circle at bottom right, 
+        rgba(255, 0, 34, 0.08), 
+        transparent 40%),
+        var(--bg-dark);
+      position: relative;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+    
+    body.blue-mode {
+      --primary: #007BFF;
+      --gradient-1: #007BFF;
+      --gradient-2: #0056b3;
+      --bg-dark: #000000;
+      --bg-card: #000000;
+      --text-primary: #ffffff;
+      --text-secondary: #cccccc;
+
+      /* Переопределяем градиентные цвета (кругляшки) на фоне */
+      background: radial-gradient(circle at top left, 
+        rgba(0, 123, 255, 0.08), 
+        transparent 40%),
+        radial-gradient(circle at bottom right, 
+        rgba(0, 86, 179, 0.08), 
+        transparent 40%),
+        var(--bg-dark);
+    }
+    
+    body.blue-mode .header-bg {
+      background: linear-gradient(45deg, #007BFF, #0056b3);
+    }
+    
+    /* Фоновая анимация */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.343-3 3 1.343 3 3 3zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23222222' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+      z-index: -1;
+      animation: floatBackground 100s linear infinite;
+      opacity: 0.3;
+    }
+    
+    @keyframes floatBackground {
+      0% {
+        background-position: 0% 0%;
+      }
+      100% {
+        background-position: 100% 100%;
+      }
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 460px;
+      background: linear-gradient(145deg, rgba(15, 15, 15, 0.95), rgba(10, 10, 10, 0.9));
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 45, 85, 0.1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: block;
+    }
+    
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8),
+                  0 0 0 1px rgba(255, 45, 85, 0.1);
+    }
+    
+    .header {
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #FF2D55, #FF0022);
+      opacity: 0.95;
+      z-index: 1;
+      animation: gradientShift 10s ease infinite;
+      background-size: 200% 200%;
+    }
+    
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 0%;
+      }
+      50% {
+        background-position: 100% 100%;
+      }
+      100% {
+        background-position: 0% 0%;
+      }
+    }
+    
+    .header-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FF2D55, #FF0022);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 15px 35px rgba(255, 45, 85, 0.25);
+      border: none;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .avatar::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0) 40%, 
+        rgba(255, 255, 255, 0.4) 50%, 
+        rgba(255, 255, 255, 0) 60%, 
+        rgba(255, 255, 255, 0) 100%);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+    
+    @keyframes shine {
+      0% {
+        left: -100%;
+        top: -100%;
+      }
+      20% {
+        left: 100%;
+        top: 100%;
+      }
+      100% {
+        left: 100%;
+        top: 100%;
+      }
+    }
+    
+    .avatar:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 35px -5px rgba(255, 45, 85, 0.7),
+                  0 0 0 8px rgba(255, 255, 255, 0.15);
+    }
+    
+    .avatar-content {
+      color: white;
+      background: none;
+      -webkit-text-fill-color: white;
+      text-shadow: none;
+    }
+    
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: -0.5px;
+      background: linear-gradient(to right, #ffffff, #dddddd);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+    }
+    
+    .subtitle {
+      font-size: 18px;
+      font-weight: 500;
+      text-align: center;
+      opacity: 0.9;
+      letter-spacing: -0.3px;
+      background: linear-gradient(to right, #dddddd, #aaaaaa);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .content {
+      padding: 32px;
+      position: relative;
+      display: block;
+    }
+    
+    .content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(to right, 
+        rgba(255, 56, 96, 0), 
+        rgba(255, 56, 96, 0.7), 
+        rgba(255, 56, 96, 0));
+      border-radius: 2px;
+    }
+    
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+    }
+    
+    .link {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 18px 24px;
+      background: rgba(20, 20, 20, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 16px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.01);
+    }
+    
+    .link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, 
+        rgba(255, 45, 85, 0.1),
+        rgba(255, 0, 34, 0.1)
+      );
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .link::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, rgba(255, 56, 96, 0), rgba(255, 56, 96, 0.1), rgba(255, 56, 96, 0));
+      transform: translateX(-100%);
+      animation: none;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .link:hover {
+      background: rgba(30, 30, 30, 0.6);
+      transform: translateY(-2px) scale(1.02);
+      border-color: rgba(255, 45, 85, 0.2);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3),
+                  0 0 0 1px rgba(255, 45, 85, 0.1),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+    
+    .link:hover::after {
+      animation: shimmer 2s infinite;
+      opacity: 1;
+    }
+    
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+    
+    .link-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 14px;
+      opacity: 0.9;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+      transition: transform 0.3s ease, color 0.3s ease;
+      fill: currentColor;
+    }
+    
+    .link:hover .link-icon {
+      transform: scale(1.1);
+      color: var(--primary);
+    }
+    
+    .link-text {
+      position: relative;
+      z-index: 2;
+      transition: color 0.3s ease;
+      background: linear-gradient(to right, white, rgba(255, 255, 255, 0.8));
+      -webkit-background-clip: text;
+      background-clip: text;
+      background-size: 100% 100%;
+    }
+    
+    .link:hover .link-text {
+      background: linear-gradient(to right, #FF2D55, #FF0022);
+      -webkit-background-clip: text;
+      background-clip: text;
+      background-size: 200% 100%;
+      animation: textShift 2s linear infinite;
+    }
+    
+    @keyframes textShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 200% 50%;
+      }
+    }
+    
+    .footer {
+      width: 100%;
+      padding: 32px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 14px;
+      opacity: 0.7;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+    
+    .visitor-counter {
+      margin: 0;
+      padding: 12px 20px;
+      background: rgba(20, 20, 20, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0.8;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .visitor-counter:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .visitor-counter-icon {
+      width: 16px;
+      height: 16px;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .visitor-counter:hover .visitor-counter-icon {
+      opacity: 1;
+    }
+
+    #visitor-count {
+      background: linear-gradient(to right, var(--gradient-1), var(--gradient-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 500;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40%;
+      height: 1px;
+      border-radius: 1px;
+    }
+    
+    /* Pulse animations for avatar */
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 56, 96, 0.4);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(255, 56, 96, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 56, 96, 0);
+      }
+    }
+    
+    /* Floating animation for the container */
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+    
+    /* Animated border for special effects */
+    .animated-border {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .animated-border::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 24px;
+      padding: 1px;
+      background: linear-gradient(45deg, 
+        transparent,
+        rgba(255, 45, 85, 0.3),
+        rgba(255, 0, 34, 0.3),
+        transparent
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: rotate 4s linear infinite;
+    }
+    
+    @keyframes rotate {
+      0% {
+        background-position: 0% 0%;
+      }
+      100% {
+        background-position: 300% 300%;
+      }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .header {
+        padding: 24px;
+      }
+      
+      .avatar {
+        width: 90px;
+        height: 90px;
+        font-size: 40px;
+      }
+      
+      .title {
+        font-size: 28px;
+      }
+      
+      .subtitle {
+        font-size: 16px;
+      }
+      
+      .content {
+        padding: 24px;
+      }
+      
+      .link {
+        padding: 14px 16px;
+      }
+    }
+    
+    /* Dark mode optimizations */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-dark: #0a0a0a;
+        --bg-card: #121212;
+      }
+    }
+    
+    /* Glass morphism effects */
+    .glass-effect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0));
+      border-radius: 24px;
+      z-index: 0;
+    }
+
+    /* Добавьте новую анимацию для фона */
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Добавьте стили для подсветки при наведении */
+    .container::after {
+      display: none;
+    }
+
+    /* Обновляем неоновое свечение для аватара */
+    .avatar::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(45deg, var(--gradient-1), var(--gradient-2));
+      filter: blur(15px);
+      opacity: 0.3;
+      z-index: -1;
+      transition: opacity 0.3s, background 0.3s;
+    }
+
+    .avatar:hover::after {
+      opacity: 0.5;
+    }
+
+    /* Добавьте модальное окно после div.container */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(10, 10, 10, 0.9));
+      margin: 15% auto;
+      padding: 25px;
+      border: 1px solid rgba(255, 45, 85, 0.2);
+      width: 80%;
+      max-width: 500px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      position: relative;
+      color: var(--text-primary);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close:hover {
+      color: var(--primary);
+    }
+
+    .ip-info {
+      margin-top: 20px;
+    }
+
+    .ip-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      transition: background-color 0.3s ease;
+    }
+
+    .ip-row:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .label {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    h2 {
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    /* Стили для аудио-визуализатора */
+    #audio-visualizer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      background: transparent;
+    }
+
+    body.blue-mode #audio-visualizer {
+      opacity: 1;
+    }
+
+    /* Blue mode overrides для карточки (контейнера) */
+    body.blue-mode .container {
+      background: var(--bg-card);
+      border: 1px solid #007BFF;
+    }
+
+    body.blue-mode .avatar {
+      background: linear-gradient(135deg, #007BFF, #0056b3);
+      box-shadow: 0 15px 35px rgba(0, 123, 255, 0.25);
+    }
+
+    /* Blue mode overrides для ссылок */
+    body.blue-mode .link {
+      border: 1px solid rgba(0, 123, 255, 0.1);
+    }
+    
+    body.blue-mode .link:hover {
+      background: rgba(0, 123, 255, 0.1);
+      transform: translateY(-2px) scale(1.02);
+      border-color: rgba(0, 123, 255, 0.2);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3),
+                  0 0 0 1px rgba(0, 123, 255, 0.1),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+
+    body.blue-mode .link:hover .link-text {
+      background: linear-gradient(to right, #007BFF, #0056b3);
+      -webkit-background-clip: text;
+      background-clip: text;
+      background-size: 200% 100%;
+      animation: textShift 2s linear infinite;
+    }
+
+    body.blue-mode .link:hover .link-icon {
+      color: #007BFF;
+    }
+
+    body.blue-mode .link::before {
+      background: linear-gradient(45deg, 
+        rgba(0, 123, 255, 0.1),
+        rgba(0, 86, 179, 0.1)
+      );
+    }
+
+    body.blue-mode .link::after {
+      background: linear-gradient(120deg, 
+        rgba(0, 123, 255, 0),
+        rgba(0, 123, 255, 0.1),
+        rgba(0, 123, 255, 0)
+      );
+    }
+
+    /* Blue mode overrides для модальных окон */
+    body.blue-mode .modal-content {
+      background: linear-gradient(145deg, rgba(0, 30, 60, 0.95), rgba(0, 15, 30, 0.9));
+      border: 1px solid rgba(0, 123, 255, 0.2);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4),
+                  0 0 0 1px rgba(0, 123, 255, 0.1);
+    }
+
+    body.blue-mode .ip-row {
+      border-bottom: 1px solid rgba(0, 123, 255, 0.1);
+    }
+
+    body.blue-mode .ip-row:hover {
+      background: rgba(0, 123, 255, 0.05);
+    }
+
+    body.blue-mode .close:hover {
+      color: #007BFF;
+    }
+
+    /* Blue mode overrides для игры в крестики-нолики */
+    body.blue-mode .game-modal {
+      background: linear-gradient(145deg, rgba(0, 30, 60, 0.95), rgba(0, 15, 30, 0.9)) !important;
+    }
+
+    body.blue-mode .game-status {
+      background: rgba(0, 123, 255, 0.05);
+    }
+
+    body.blue-mode .cell {
+      background: rgba(0, 123, 255, 0.1);
+      border: 2px solid transparent;
+    }
+
+    body.blue-mode .cell:empty:hover {
+      background: rgba(0, 123, 255, 0.15);
+    }
+
+    body.blue-mode .cell.winner {
+      border-color: #007BFF;
+      box-shadow: 0 0 20px rgba(0, 123, 255, 0.4);
+    }
+
+    body.blue-mode .play-again-btn {
+      background: linear-gradient(45deg, #007BFF, #0056b3);
+    }
+
+    body.blue-mode .play-again-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+    }
+
+    /* Стили для фоновых кружков, анимированных под такт музыки */
+    #music-circles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.343-3 3 1.343 3 3 3zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23222222' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+      background-size: cover;
+      z-index: -1;
+      pointer-events: none;
+      filter: brightness(1);
+      transition: filter 0.1s ease, transform 0.1s ease;
+    }
+
+    /* Обновлённые стили для огонька и анимаций */
+    #fire-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #FF6B6B, #FF4500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 9999;
+      user-select: none;
+      animation: pulse 3s infinite ease-in-out;
+      box-shadow: 0 0 20px rgba(255, 69, 0, 0.4),
+                  inset 0 0 15px rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(5px);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 20px rgba(255, 69, 0, 0.4),
+                    inset 0 0 15px rgba(255, 255, 255, 0.3);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(255, 69, 0, 0.6),
+                    inset 0 0 20px rgba(255, 255, 255, 0.4);
+        transform: scale(1.05);
+      }
+      100% {
+        box-shadow: 0 0 20px rgba(255, 69, 0, 0.4),
+                    inset 0 0 15px rgba(255, 255, 255, 0.3);
+        transform: scale(1);
+      }
+    }
+
+    #fire-button:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 30px rgba(255, 69, 0, 0.8),
+                  inset 0 0 20px rgba(255, 255, 255, 0.4);
+    }
+
+    #fire-button.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: scale(0.95);
+      filter: grayscale(0.5);
+    }
+
+    body.blue-mode #fire-button {
+      background: radial-gradient(circle at 30% 30%, #00a6ff, #0066ff);
+      box-shadow: 0 0 20px rgba(0, 102, 255, 0.4),
+                  inset 0 0 15px rgba(255, 255, 255, 0.3);
+      animation: water-pulse 3s infinite ease-in-out;
+    }
+
+    @keyframes water-pulse {
+      0% {
+        box-shadow: 0 0 20px rgba(0, 102, 255, 0.4),
+                    inset 0 0 15px rgba(255, 255, 255, 0.3);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(0, 102, 255, 0.6),
+                    inset 0 0 20px rgba(255, 255, 255, 0.4);
+        transform: scale(1.05) translateY(-2px);
+      }
+      100% {
+        box-shadow: 0 0 20px rgba(0, 102, 255, 0.4),
+                    inset 0 0 15px rgba(255, 255, 255, 0.3);
+        transform: scale(1);
+      }
+    }
+
+    body.blue-mode #fire-button:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 30px rgba(0, 102, 255, 0.8),
+                  inset 0 0 20px rgba(255, 255, 255, 0.4);
+    }
+
+    body.blue-mode #fire-button.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: scale(0.95);
+      filter: grayscale(0.5) hue-rotate(180deg);
+    }
+
+    /* Стили для игры в крестики-нолики */
+    .game-modal {
+      max-width: 400px !important;
+      background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(10, 10, 10, 0.9)) !important;
+      transform: scale(0.95);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .game-modal.active {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .game-status {
+      text-align: center;
+      margin: 15px 0;
+      font-size: 18px;
+      color: var(--text-primary);
+      font-weight: 500;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .game-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    .cell {
+      aspect-ratio: 1;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      font-weight: bold;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .cell:empty:hover {
+      background: rgba(255,255,255,0.15);
+      transform: scale(1.05);
+    }
+
+    .cell.x {
+      color: #FF2D55;
+    }
+
+    .cell.o {
+      color: #007BFF;
+    }
+
+    .cell.disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    .cell.winner {
+      animation: winner-cell 0.5s ease infinite;
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4);
+    }
+
+    @keyframes winner-cell {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .play-again-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(45deg, var(--gradient-1), var(--gradient-2));
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .play-again-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.3);
+    }
+
+    /* Анимация для появления символов */
+    @keyframes symbol-appear {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .cell.x, .cell.o {
+      animation: symbol-appear 0.3s ease forwards;
+    }
+
+    .fire-float {
+      position: fixed;
+      z-index: 9998;
+      pointer-events: none;
+      font-size: 32px;
+      animation: fireRise 1.5s ease-out forwards;
+      filter: drop-shadow(0 0 10px rgba(255, 69, 0, 0.8));
+    }
+
+    @keyframes fireRise {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.4);
+      }
+      5% {
+        opacity: 1;
+        transform: translateY(-10px) scale(1);
+      }
+      80% {
+        opacity: 1;
+        transform: translateY(-200px) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-300px) scale(0.4);
+      }
+    }
+
+    body.blue-mode .fire-float {
+      filter: drop-shadow(0 0 10px rgba(0, 102, 255, 0.8));
+      animation: waterRise 2s ease-out forwards;
+    }
+
+    @keyframes waterRise {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.4);
+      }
+      5% {
+        opacity: 1;
+        transform: translateY(-10px) scale(1);
+      }
+      80% {
+        opacity: 1;
+        transform: translateY(-200px) scale(0.8) rotate(180deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-300px) scale(0.4) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="music-circles"></div>
+  <div class="container">
+    <div class="animated-border"></div>
+    <div class="glass-effect"></div>
+    <div class="header">
+      <div class="header-bg"></div>
+      <div class="header-content">
+        <div class="avatar">
+          <div class="avatar-content">ZOV</div>
+        </div>
+        <h1 class="title">NikitaAnd</h1>
+        <p class="subtitle">Никита кто? НикитаЭнд</p>
+      </div>
+    </div>
+    
+    <div class="content">
+      <div class="links">
+        <a href="https://github.com/NikitaAnd" class="link">
+          <svg class="link-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.477 2 2 6.477 2 12C2 16.418 4.865 20.167 8.84 21.494C9.34 21.591 9.5 21.275 9.5 21.003C9.5 20.759 9.497 20.124 9.492 19.276C6.728 19.895 6.139 17.969 6.139 17.969C5.685 16.812 5.03 16.496 5.03 16.496C4.12 15.883 5.094 15.895 5.094 15.895C6.106 15.965 6.63 16.933 6.63 16.933C7.521 18.437 8.97 18.015 9.52 17.752C9.616 17.13 9.89 16.707 10.19 16.47C7.978 16.231 5.654 15.367 5.654 11.614C5.654 10.494 6.05 9.584 6.649 8.878C6.535 8.604 6.182 7.705 6.747 6.528C6.747 6.528 7.585 6.254 9.468 7.503C10.29 7.28 11.15 7.168 12 7.167C12.85 7.171 13.71 7.283 14.532 7.504C16.415 6.253 17.251 6.529 17.251 6.529C17.817 7.705 17.465 8.605 17.351 8.878C17.95 9.584 18.346 10.495 18.346 11.614C18.346 15.379 16.017 16.228 13.8 16.464C14.172 16.757 14.5 17.343 14.5 18.233C14.5 19.507 14.475 20.679 14.475 20.998C14.475 21.271 14.635 21.591 15.137 21.486C19.138 20.167 22 16.417 22 12C22 6.477 17.523 2 12 2Z" fill="currentColor"/>
+          </svg>
+          <span class="link-text">GitHub</span>
+        </a>
+        <a href="https://t.me/nikitaand611" class="link">
+          <svg class="link-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.0717 3.32159C21.5776 2.89139 20.8952 2.7677 20.2846 3.00987L2.5998 8.97108C1.72191 9.31855 1.70231 10.5451 2.5714 10.9235L6.67969 12.4749L8.52916 19.1027C8.68525 19.6598 9.23387 20.0115 9.80527 19.9507C10.1309 19.9153 10.4327 19.7681 10.6553 19.5373L13.3891 16.7196L17.4497 19.7383C18.2952 20.3843 19.5176 19.9792 19.8212 18.9559L22.9976 4.79599C23.2057 4.09969 22.8372 3.48369 22.0717 3.32159ZM9.03326 12.9489C8.86301 13.1147 8.80219 13.3611 8.87691 13.5875L9.53113 16.0081L8.53743 12.9328L15.9916 7.52311L9.03326 12.9489Z" fill="currentColor"/>
+          </svg>
+          <span class="link-text">Telegram</span>
+        </a>
+        <a href="https://vk.com/xnikitaand" class="link">
+          <svg class="link-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M12.855 16.2C7.785 16.2 4.765 12.57 4.65 6.8H7.095C7.175 11.03 9.065 12.855 10.555 13.23V6.8H12.825V10.41C14.295 10.22 15.845 8.55 16.365 6.8H18.635C18.23 9.005 16.56 10.675 15.38 11.32C16.56 11.845 18.455 13.275 19.1 16.2H16.605C16.095 14.22 14.695 12.885 12.825 12.665V16.2H12.855Z" fill="currentColor"/>
+          </svg>
+          <span class="link-text">VK</span>
+        </a>
+        <a href="https://t.me/testik0123" class="link">
+          <svg class="link-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.0717 3.32159C21.5776 2.89139 20.8952 2.7677 20.2846 3.00987L2.5998 8.97108C1.72191 9.31855 1.70231 10.5451 2.5714 10.9235L6.67969 12.4749L8.52916 19.1027C8.68525 19.6598 9.23387 20.0115 9.80527 19.9507C10.1309 19.9153 10.4327 19.7681 10.6553 19.5373L13.3891 16.7196L17.4497 19.7383C18.2952 20.3843 19.5176 19.9792 19.8212 18.9559L22.9976 4.79599C23.2057 4.09969 22.8372 3.48369 22.0717 3.32159ZM9.03326 12.9489C8.86301 13.1147 8.80219 13.3611 8.87691 13.5875L9.53113 16.0081L8.53743 12.9328L15.9916 7.52311L9.03326 12.9489Z" fill="currentColor"/>
+          </svg>
+          <span class="link-text">Telegram Channel</span>
+        </a>
+        <a href="#" class="link" id="tic-tac-toe-btn">
+          <svg class="link-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4H8V8H4V4M10 4H14V8H10V4M16 4H20V8H16V4M4 10H8V14H4V10M10 10H14V14H10V10M16 10H20V14H16V10M4 16H8V20H4V16M10 16H14V20H10V16M16 16H20V20H16V16" fill="currentColor"/>
+          </svg>
+          <span class="link-text">Крестики-нолики</span>
+        </a>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <div class="visitor-counter">
+        <svg class="visitor-counter-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+        </svg>
+        <span id="visitor-count">0 online</span>
+      </div>
+      © NikitaAnd 2025
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+      const socket = io();
+      const visitorCountElement = document.getElementById('visitor-count');
+
+      socket.on('user_count', function(data) {
+        visitorCountElement.textContent = `${data.count} online`;
+      });
+    </script>
+
+    <!-- Добавьте модальное окно после div.container -->
+    <div id="ipModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Информация об IP</h2>
+        <div class="ip-info">
+          <div class="ip-row">
+            <span class="label">IP:</span>
+            <span id="ipAddress">Loading...</span>
+          </div>
+          <div class="ip-row">
+            <span class="label">Город:</span>
+            <span id="ipCity">Loading...</span>
+          </div>
+          <div class="ip-row">
+            <span class="label">Регион:</span>
+            <span id="ipRegion">Loading...</span>
+          </div>
+          <div class="ip-row">
+            <span class="label">Страна:</span>
+            <span id="ipCountry">Loading...</span>
+          </div>
+          <div class="ip-row">
+            <span class="label">Провайдер:</span>
+            <span id="ipOrg">Loading...</span>
+          </div>
+          <div class="ip-row">
+            <span class="label">Индекс:</span>
+            <span id="ipPostal">Loading...</span>
+          </div>
+          <div class="ip-row">
+            <span class="label">Часовой пояс:</span>
+            <span id="ipTimezone">Loading...</span>
+          </div>
+          <div class="ip-row">
+            <span class="label">Координаты:</span>
+            <span id="ipCoords">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Добавьте скрипт для обработки клика по аватару -->
+    <script>
+    const avatar = document.querySelector('.avatar');
+    const modal = document.getElementById('ipModal');
+    const closeBtn = document.querySelector('.close');
+
+    avatar.addEventListener('click', async () => {
+      modal.style.display = "block";
+      
+      try {
+        const response = await fetch('/get_ip_info');
+        const data = await response.json();
+        
+        document.getElementById('ipAddress').textContent = data.ip;
+        document.getElementById('ipCity').textContent = data.city;
+        document.getElementById('ipRegion').textContent = data.region;
+        document.getElementById('ipCountry').textContent = data.country;
+        document.getElementById('ipOrg').textContent = data.org;
+        document.getElementById('ipPostal').textContent = data.postal;
+        document.getElementById('ipTimezone').textContent = data.timezone;
+        document.getElementById('ipCoords').textContent = `${data.latitude}, ${data.longitude}`;
+      } catch (error) {
+        console.error('Error fetching IP info:', error);
+      }
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = "none";
+    });
+
+    window.addEventListener('click', (event) => {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    });
+    </script>
+
+    <!-- Новый скрипт для аудио и визуализации -->
+    <script>
+      // Переменная для отслеживания состояния аудио
+      let audioPlaying = false;
+      
+      // Создаем аудиоэлемент для morgen.mp3 (файл должен находиться в той же директории)
+      const audioElement = document.createElement('audio');
+      audioElement.id = 'audio';
+      audioElement.src = '/static/morgen.mp3';
+      audioElement.preload = 'auto';
+      audioElement.loop = true; // воспроизводить по циклу
+      audioElement.style.display = 'none';
+      document.body.appendChild(audioElement);
+
+      // Создаем элемент canvas для визуализации аудио внизу страницы
+      const canvas = document.createElement('canvas');
+      canvas.id = 'audio-visualizer';
+      document.body.appendChild(canvas);
+
+      let audioCtx, analyser, source, dataArray, animationId;
+      const canvasCtx = canvas.getContext('2d');
+
+      function initAudio() {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 256;
+          const bufferLength = analyser.frequencyBinCount;
+          dataArray = new Uint8Array(bufferLength);
+          source = audioCtx.createMediaElementSource(audioElement);
+          source.connect(analyser);
+          analyser.connect(audioCtx.destination);
+        }
+      }
+
+      // Функция для отрисовки аудио-визуализации (волновая визуализация - waveform)
+      function drawVisualizer() {
+        if (!document.body.classList.contains('blue-mode')) {
+          cancelAnimationFrame(animationId);
+          canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+          return;
+        }
+
+        const WIDTH = canvas.width = canvas.offsetWidth;
+        const HEIGHT = canvas.height = canvas.offsetHeight;
+        
+        // Очищаем canvas
+        canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+        
+        // Получаем данные частот
+        analyser.getByteFrequencyData(dataArray);
+        
+        const centerY = HEIGHT / 2;
+        const barWidth = (WIDTH / dataArray.length) * 2.5;
+        let x = 0;
+        
+        // Создаем градиенты для линий с более плавными переходами
+        const topGradient = canvasCtx.createLinearGradient(0, 0, 0, centerY);
+        topGradient.addColorStop(0, 'rgba(0, 191, 255, 0)');
+        topGradient.addColorStop(0.4, 'rgba(0, 123, 255, 0.2)');
+        topGradient.addColorStop(1, 'rgba(0, 123, 255, 0.6)');
+
+        const bottomGradient = canvasCtx.createLinearGradient(0, centerY, 0, HEIGHT);
+        bottomGradient.addColorStop(0, 'rgba(0, 123, 255, 0.6)');
+        bottomGradient.addColorStop(0.6, 'rgba(0, 123, 255, 0.2)');
+        bottomGradient.addColorStop(1, 'rgba(0, 191, 255, 0)');
+        
+        // Сглаживаем данные для более плавной анимации
+        const smoothedData = new Array(dataArray.length);
+        for (let i = 0; i < dataArray.length; i++) {
+          const prevIndex = i > 0 ? i - 1 : dataArray.length - 1;
+          const nextIndex = i < dataArray.length - 1 ? i + 1 : 0;
+          smoothedData[i] = (dataArray[prevIndex] * 0.2 + dataArray[i] * 0.6 + dataArray[nextIndex] * 0.2);
+        }
+        
+        // Создаем массивы точек для верхней и нижней частей
+        let topPoints = [];
+        let bottomPoints = [];
+        
+        // Собираем точки для кривых
+        for (let i = 0; i < smoothedData.length; i++) {
+          const barHeight = (smoothedData[i] / 255.0) * (HEIGHT / 2) * 0.8;
+          const xPos = x + barWidth / 2;
+          
+          topPoints.push({
+            x: xPos,
+            y: centerY - barHeight
+          });
+          
+          bottomPoints.push({
+            x: xPos,
+            y: centerY + barHeight
+          });
+          
+          x += barWidth;
+        }
+        
+        // Добавляем начальные и конечные точки для плавного перехода
+        topPoints.unshift({ x: 0, y: centerY });
+        topPoints.push({ x: WIDTH, y: centerY });
+        bottomPoints.unshift({ x: 0, y: centerY });
+        bottomPoints.push({ x: WIDTH, y: centerY });
+        
+        // Рисуем верхнюю часть
+        canvasCtx.beginPath();
+        canvasCtx.moveTo(topPoints[0].x, topPoints[0].y);
+        
+        // Используем кривые Безье для более плавной анимации
+        for (let i = 0; i < topPoints.length - 1; i++) {
+          const xc = (topPoints[i].x + topPoints[i + 1].x) / 2;
+          const yc = (topPoints[i].y + topPoints[i + 1].y) / 2;
+          canvasCtx.quadraticCurveTo(topPoints[i].x, topPoints[i].y, xc, yc);
+        }
+        
+        canvasCtx.lineTo(WIDTH, centerY);
+        canvasCtx.fillStyle = topGradient;
+        canvasCtx.fill();
+        
+        // Рисуем нижнюю часть
+        canvasCtx.beginPath();
+        canvasCtx.moveTo(bottomPoints[0].x, bottomPoints[0].y);
+        
+        for (let i = 0; i < bottomPoints.length - 1; i++) {
+          const xc = (bottomPoints[i].x + bottomPoints[i + 1].x) / 2;
+          const yc = (bottomPoints[i].y + bottomPoints[i + 1].y) / 2;
+          canvasCtx.quadraticCurveTo(bottomPoints[i].x, bottomPoints[i].y, xc, yc);
+        }
+        
+        canvasCtx.lineTo(WIDTH, centerY);
+        canvasCtx.fillStyle = bottomGradient;
+        canvasCtx.fill();
+        
+        // Добавляем свечение
+        const intensity = smoothedData.reduce((acc, val) => acc + val, 0) / (255 * smoothedData.length);
+        
+        // Добавляем общее свечение
+        const glow = canvasCtx.createRadialGradient(
+          WIDTH / 2, centerY, 0,
+          WIDTH / 2, centerY, WIDTH / 2
+        );
+        glow.addColorStop(0, `rgba(0, 123, 255, ${intensity * 0.15})`);
+        glow.addColorStop(1, 'rgba(0, 123, 255, 0)');
+        canvasCtx.fillStyle = glow;
+        canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+        
+        // Обновляем фоновые эффекты
+        const circlesElement = document.getElementById('music-circles');
+        if (circlesElement) {
+          circlesElement.style.filter = `brightness(${1 + intensity * 0.5})`;
+          circlesElement.style.transform = `scale(${1 + intensity * 0.05})`;
+        }
+        
+        animationId = requestAnimationFrame(drawVisualizer);
+      }
+
+      // Функция-тоггл для запуска/остановки аудио, визуализатора и переключения темы сайта
+      function toggleAudio() {
+        if (!audioPlaying) {
+          initAudio();
+          audioCtx.resume().then(() => {
+            audioElement.play();
+            animationId = requestAnimationFrame(drawVisualizer);
+          });
+          document.body.classList.add('blue-mode');
+          updateFireButton();
+          audioPlaying = true;
+        } else {
+          audioElement.pause();
+          cancelAnimationFrame(animationId);
+          canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+          document.body.classList.remove('blue-mode');
+          updateFireButton();
+          audioPlaying = false;
+        }
+      }
+
+      // Добавляем обработчик нажатий клавиш: срабатывает при нажатии "w" или "ц"
+      window.addEventListener('keydown', (event) => {
+        const key = event.key.toLowerCase();
+        if (key === 'w' || key === 'ц') {
+          toggleAudio();
+        }
+      });
+
+      // Обновляем кнопку при переключении режима
+      function updateFireButton() {
+        const fireButton = document.getElementById('fire-button');
+        fireButton.textContent = document.body.classList.contains('blue-mode') ? '💧' : '🔥';
+      }
+    </script>
+  </div>
+  <!-- Кнопка-огонёк, размещённая вне карточки, чтобы быть видимой на всей странице -->
+  <div id="fire-button">🔥</div>
+
+  <script>
+    let isButtonEnabled = true;
+    let lastClickTime = 0;
+    const CLICK_DELAY = 2000; // 2 секунды задержки между кликами
+
+    function createFireAnimation(x, y) {
+      const fire = document.createElement('div');
+      fire.className = 'fire-float';
+      fire.textContent = document.body.classList.contains('blue-mode') ? '💧' : '🔥';
+      
+      // Позиционируем относительно клика или случайно
+      fire.style.left = (x || Math.random() * window.innerWidth) + 'px';
+      fire.style.bottom = '20px';
+      
+      // Добавляем случайное смещение и размер
+      const randomOffset = (Math.random() - 0.5) * 150;
+      const randomScale = 0.7 + Math.random() * 0.6;
+      fire.style.transform = `translateX(${randomOffset}px) scale(${randomScale})`;
+      
+      document.body.appendChild(fire);
+      
+      // Удаляем элемент после завершения анимации
+      setTimeout(() => fire.remove(), document.body.classList.contains('blue-mode') ? 2000 : 1500);
+    }
+
+    function createFireBurst() {
+      // Создаем несколько огоньков с разными задержками
+      const count = document.body.classList.contains('blue-mode') ? 20 : 15;
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          createFireAnimation(
+            Math.random() * window.innerWidth,
+            Math.random() * window.innerHeight / 2
+          );
+        }, i * 40);
+      }
+    }
+
+    // Обработчик клика по кнопке
+    document.getElementById('fire-button').addEventListener('click', function(e) {
+      const currentTime = Date.now();
+      
+      if (currentTime - lastClickTime < CLICK_DELAY) {
+        return; // Игнорируем слишком частые клики
+      }
+      
+      lastClickTime = currentTime;
+      this.classList.add('disabled');
+      
+      // Отправляем событие на сервер
+      socket.emit('trigger_fire');
+      
+      // Создаем локальную анимацию
+      createFireBurst();
+      
+      // Возвращаем кнопку в активное состояние через 2 секунды
+      setTimeout(() => {
+        this.classList.remove('disabled');
+      }, CLICK_DELAY);
+    });
+
+    // Слушаем события от сервера
+    socket.on('trigger_fire', function() {
+      createFireBurst();
+    });
+  </script>
+
+  <!-- Добавляем модальное окно для игры -->
+  <div id="gameModal" class="modal">
+    <div class="modal-content game-modal">
+      <span class="close" id="closeGame">&times;</span>
+      <h2>Крестики-нолики</h2>
+      <div id="game-status" class="game-status">Ожидание подключения...</div>
+      <div id="game-board" class="game-board">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+      </div>
+      <button id="play-again" class="play-again-btn" style="display: none;">Играть снова</button>
+    </div>
+  </div>
+
+  <script>
+    // Добавляем код для игры в крестики-нолики
+    const gameModal = document.getElementById('gameModal');
+    const closeGame = document.getElementById('closeGame');
+    const ticTacToeBtn = document.getElementById('tic-tac-toe-btn');
+    const gameBoard = document.getElementById('game-board');
+    const gameStatus = document.getElementById('game-status');
+    const playAgainBtn = document.getElementById('play-again');
+    
+    let currentGame = {
+      gameId: null,
+      symbol: null,
+      isMyTurn: false
+    };
+
+    function showGameModal() {
+      gameModal.style.display = 'block';
+      // Добавляем небольшую задержку для анимации
+      setTimeout(() => {
+        gameModal.querySelector('.game-modal').classList.add('active');
+      }, 10);
+    }
+
+    function hideGameModal() {
+      gameModal.querySelector('.game-modal').classList.remove('active');
+      setTimeout(() => {
+        gameModal.style.display = 'none';
+      }, 300);
+    }
+
+    ticTacToeBtn.addEventListener('click', () => {
+      showGameModal();
+      socket.emit('join_game');
+      resetGame();
+    });
+
+    closeGame.addEventListener('click', () => {
+      hideGameModal();
+      currentGame = {
+        gameId: null,
+        symbol: null,
+        isMyTurn: false
+      };
+    });
+
+    function resetGame() {
+      const cells = document.querySelectorAll('.cell');
+      cells.forEach(cell => {
+        cell.textContent = '';
+        cell.className = 'cell';
+      });
+      gameStatus.textContent = 'Ожидание подключения...';
+      playAgainBtn.style.display = 'none';
+    }
+
+    function updateBoard(board) {
+      const cells = document.querySelectorAll('.cell');
+      cells.forEach((cell, index) => {
+        const value = board[index];
+        if (value && cell.textContent !== value) {
+          cell.textContent = value;
+          cell.className = `cell ${value.toLowerCase()}`;
+        }
+      });
+    }
+
+    function highlightWinningCells(combo) {
+      if (combo) {
+        combo.forEach(index => {
+          const cell = document.querySelector(`[data-index="${index}"]`);
+          cell.classList.add('winner');
+        });
+      }
+    }
+
+    gameBoard.addEventListener('click', (e) => {
+      if (!e.target.classList.contains('cell')) return;
+      if (!currentGame.isMyTurn || e.target.textContent) return;
+
+      const position = parseInt(e.target.dataset.index);
+      socket.emit('make_move', {
+        game_id: currentGame.gameId,
+        position: position
+      });
+    });
+
+    playAgainBtn.addEventListener('click', () => {
+      socket.emit('join_game');
+      resetGame();
+    });
+
+    socket.on('waiting_for_opponent', () => {
+      gameStatus.textContent = 'Ожидание противника...';
+    });
+
+    socket.on('game_started', (data) => {
+      currentGame.gameId = data.game_id;
+      currentGame.symbol = data.symbol;
+      currentGame.isMyTurn = data.your_turn;
+      updateBoard(data.board);
+      gameStatus.textContent = data.your_turn ? 'Ваш ход' : 'Ход противника';
+    });
+
+    socket.on('move_made', (data) => {
+      updateBoard(data.board);
+      currentGame.isMyTurn = data.next_turn === socket.id;
+      gameStatus.textContent = currentGame.isMyTurn ? 'Ваш ход' : 'Ход противника';
+    });
+
+    socket.on('game_over', (data) => {
+      updateBoard(data.board);
+      if (data.winner === null) {
+        gameStatus.textContent = 'Ничья!';
+      } else {
+        gameStatus.textContent = data.winner === socket.id ? 'Вы победили!' : 'Вы проиграли!';
+        if (data.combo) {
+          highlightWinningCells(data.combo);
+        }
+      }
+      playAgainBtn.style.display = 'block';
+      currentGame.isMyTurn = false;
+    });
+
+    socket.on('game_ended', (data) => {
+      gameStatus.textContent = data.message;
+      playAgainBtn.style.display = 'block';
+      currentGame.isMyTurn = false;
+    });
+  </script>
+</body>
+</html>
